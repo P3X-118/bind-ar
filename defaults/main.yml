@@ -1,11 +1,3 @@
-# SPDX-FileCopyrightText: 2023 - 2024 Nikita Chernyi
-# SPDX-FileCopyrightText: 2023 - 2025 Slavi Pantaleev
-# SPDX-FileCopyrightText: 2024 Sergio Durigan Junior
-# SPDX-FileCopyrightText: 2025 MASH project contributors
-# SPDX-FileCopyrightText: 2025 Suguru Hirahara
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
 ---
 # Project source code URL: https://gitlab.isc.org/isc-projects/bind9
 
@@ -18,7 +10,7 @@ bind_enabled: true
 # - IPv6 query source addresses (sets to "none")
 # Note: This does NOT affect whether BIND resolves AAAA records or serves them.
 # It only controls whether BIND itself attempts to use IPv6 for certain network connectivity tasks.
-bind_ipv6_connectivity_enabled: true
+bind_ipv6_connectivity_enabled: false
 
 bind_identifier: bind
 bind_base_path: "/{{ bind_identifier }}"
