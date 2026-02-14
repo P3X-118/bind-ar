@@ -602,7 +602,7 @@ bind_container_process_arguments_custom: []
 
 # List of systemd services that BIND systemd service depends on
 bind_systemd_required_services_list: "{{ bind_systemd_required_services_list_default + bind_systemd_required_services_list_auto + bind_systemd_required_services_list_custom }}"
-bind_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
+bind_systemd_required_services_list_default: "{{ [sysd_docker_service] if sysd_docker_service else [] }}"
 bind_systemd_required_services_list_auto: []
 bind_systemd_required_services_list_custom: []
 

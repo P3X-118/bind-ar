@@ -1,12 +1,7 @@
-# SPDX-FileCopyrightText: 2024 Slavi Pantaleev
-# SPDX-FileCopyrightText: 2025 Suguru Hirahara
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
 ---
 - name: Check existence of BIND systemd service
   ansible.builtin.stat:
-    path: "{{ devture_systemd_docker_base_systemd_path }}/{{ bind_identifier }}.service"
+    path: "{{ sysd_docker_service_path }}/{{ bind_identifier }}.service"
   register: bind_service_stat
 
 - name: Uninstall BIND systemd services and files
@@ -21,17 +16,17 @@
 
     - name: Ensure BIND systemd service does not exist
       ansible.builtin.file:
-        path: "{{ devture_systemd_docker_base_systemd_path }}/{{ bind_identifier }}.service"
+        path: "{{ sysd_docker_service_path }}/{{ bind_identifier }}.service"
         state: absent
 
     - name: Ensure BIND container network does not exist via community.docker.docker_network
-      when: devture_systemd_docker_base_container_network_creation_method == 'ansible-module'
+      when: sysd_docker_net_creation_method == 'ansible-module'
       community.docker.docker_network:
         name: "{{ bind_container_network }}"
         state: absent
 
     - name: Ensure BIND container network does not exist via ansible.builtin.command
-      when: devture_systemd_docker_base_container_network_creation_method == 'command'
+      when: sysd_docker_net_creation_method == 'command'
       ansible.builtin.command:
         cmd: >-
           {{ sysd_docker_host_command }} network rm
