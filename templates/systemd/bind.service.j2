@@ -18,10 +18,10 @@ DefaultDependencies=no
 [Service]
 Type=simple
 Environment="HOME={{ devture_systemd_docker_base_systemd_unit_home_path }}"
-ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} stop -t {{ devture_systemd_docker_base_container_stop_grace_time_seconds }} {{ bind_identifier }} 2>/dev/null || true'
-ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ bind_identifier }} 2>/dev/null || true'
+ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ sysd_docker_host_command }} stop -t {{ devture_systemd_docker_base_container_stop_grace_time_seconds }} {{ bind_identifier }} 2>/dev/null || true'
+ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ sysd_docker_host_command }} rm {{ bind_identifier }} 2>/dev/null || true'
 
-ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
+ExecStartPre={{ sysd_docker_host_command }} create \
       --rm \
       --name={{ bind_identifier }} \
       --log-driver=none \
@@ -61,13 +61,13 @@ ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
       {{ bind_container_image }} {{ bind_container_process_arguments | join(' ') }}
 
 {% for network in bind_container_additional_networks %}
-ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ bind_identifier }}
+ExecStartPre={{ sysd_docker_host_command }} network connect {{ network }} {{ bind_identifier }}
 {% endfor %}
 
-ExecStart={{ devture_systemd_docker_base_host_command_docker }} start --attach {{ bind_identifier }}
+ExecStart={{ sysd_docker_host_command }} start --attach {{ bind_identifier }}
 
-ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} stop -t {{ devture_systemd_docker_base_container_stop_grace_time_seconds }} {{ bind_identifier }} 2>/dev/null || true'
-ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ bind_identifier }} 2>/dev/null || true'
+ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ sysd_docker_host_command }} stop -t {{ devture_systemd_docker_base_container_stop_grace_time_seconds }} {{ bind_identifier }} 2>/dev/null || true'
+ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ sysd_docker_host_command }} rm {{ bind_identifier }} 2>/dev/null || true'
 
 ExecReload={{ bind_bin_path }}/rndc reload
 
